@@ -1,4 +1,3 @@
-
 # 01 - Control de flujo en PML
 
 ## 🧭 ¿Qué es el control de flujo?
@@ -7,7 +6,7 @@ El control de flujo en PML permite definir cómo se ejecuta el código: tomar de
 
 ---
 
-## 🔁 Condicionales (`IF`, `THEN`, `ELSE`, `ENDIF`)
+## 🔁 Condicionales (`IF`, `THEN`, `ELSE`, `ELSEIF`, `ENDIF`)
 
 Permiten ejecutar bloques solo si se cumple una condición:
 
@@ -17,6 +16,18 @@ IF (!x GT 0) THEN
    !!Alert.Message('Valor positivo')
 ELSE
    !!Alert.Message('Valor negativo o cero')
+ENDIF
+```
+
+También puedes usar múltiples condiciones:
+
+```pml
+IF (!x EQ 1) THEN
+   $P 'Es uno'
+ELSEIF (!x EQ 2) THEN
+   $P 'Es dos'
+ELSE
+   $P 'No es ni uno ni dos'
 ENDIF
 ```
 
@@ -48,6 +59,25 @@ DO !nombre VALUES !nombres
    !!Alert.Message('Hola, ' + !nombre)
 ENDDO
 ```
+
+### Sentencias internas: `BREAK`, `SKIP`
+
+```pml
+DO !i FROM 1 TO 10
+   IF (!i EQ 5) THEN
+      SKIP  -- salta esta iteración
+   ENDIF
+
+   IF (!i GT 8) THEN
+      BREAK  -- termina el bucle
+   ENDIF
+
+   $P 'Valor: ' + $!i
+ENDDO
+```
+
+- `SKIP` / `SKIP IF (<cond>)`: omite el resto del bloque y pasa a la siguiente iteración.
+- `BREAK` / `BREAK IF (<cond>)`: finaliza el bucle inmediatamente.
 
 ---
 
@@ -133,7 +163,6 @@ ENDHANDLE
 - Valida con `BADREF` antes de acceder a propiedades de elementos del modelo.
 - Usa `UNSET` para evitar errores con variables opcionales.
 - Usa `HANDLE` con paréntesis. Considera `HANDLE ANY` para errores genéricos.
+- Controla bucles con `BREAK` y `SKIP` para mayor flexibilidad.
 
 ---
-
-
